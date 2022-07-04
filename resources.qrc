@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>resources/connected.svg</file>
+        <file>resources/disconnected.svg</file>
+        <file>resources/exit.svg</file>
+        <file>resources/settings.svg</file>
+    </qresource>
+</RCC>

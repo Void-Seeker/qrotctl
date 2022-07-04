@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>QHamRotator</string>
+   <string>QRotCtl</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
@@ -147,23 +147,47 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
+   <addaction name="actionConnect_to_rotator"/>
+   <addaction name="actionDisconnect"/>
+   <addaction name="separator"/>
   </widget>
   <action name="actionExit">
+   <property name="icon">
+    <iconset>
+     <normalon>:/resources/exit.svg</normalon>
+    </iconset>
+   </property>
    <property name="text">
     <string>Exit</string>
    </property>
   </action>
   <action name="actionSettings">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/resources/settings.svg</normaloff>:/resources/settings.svg</iconset>
+   </property>
    <property name="text">
     <string>Settings</string>
    </property>
   </action>
   <action name="actionConnect_to_rotator">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/resources/connected.svg</normaloff>
+     <normalon>:/resources/connected.svg</normalon>:/resources/connected.svg</iconset>
+   </property>
    <property name="text">
     <string>Connect</string>
    </property>
+   <property name="toolTip">
+    <string>Connect to rotator</string>
+   </property>
   </action>
   <action name="actionDisconnect">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/resources/disconnected.svg</normaloff>:/resources/disconnected.svg</iconset>
+   </property>
    <property name="text">
     <string>Disconnect</string>
    </property>
@@ -181,6 +205,8 @@
    <header>qwt_dial.h</header>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

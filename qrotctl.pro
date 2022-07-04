@@ -1,4 +1,4 @@
-QT       += core gui
+QT       += core gui svg
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -42,4 +42,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 unix: CONFIG += link_pkgconfig
 unix: PKGCONFIG += hamlib
+
+RESOURCES += \
+    resources.qrc
 
