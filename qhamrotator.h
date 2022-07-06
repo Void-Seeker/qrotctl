@@ -48,7 +48,7 @@ private:
 class RotException: public QException
 {
 public:
-    QString message;
+    const char* message;
     int errorno;
 
     RotException(const char *msg, int err) noexcept
@@ -81,7 +81,7 @@ public:
 
     virtual const char* what() const noexcept override
     {
-        return message.toLatin1().toStdString().c_str();
+        return message;
     }
 
     virtual const char *classname() const
