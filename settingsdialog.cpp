@@ -3,7 +3,6 @@
 #include <QFile>
 #include <QMessageBox>
 #include <QTextStream>
-#include <QDebug>
 SettingsDialog::SettingsDialog(const QString &conffile, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::SettingsDialog), configfile(conffile)

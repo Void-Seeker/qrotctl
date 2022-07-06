@@ -4,7 +4,6 @@
 #include <QString>
 #include <QStringList>
 #include <hamlib/rotator.h>
-#include <QDebug>
 #include <QException>
 typedef QPair<azimuth_t,elevation_t> TRotatorPosition;
 class QHamRotator
@@ -73,11 +72,6 @@ public:
     virtual void raise() const override {throw *this;}
 
     virtual RotException *clone() const override {return new RotException(*this);}
-
-    virtual void print() const
-    {
-        qDebug() << "Rotator exception: " << message;
-    }
 
     virtual const char* what() const noexcept override
     {
