@@ -14,11 +14,9 @@ MainWindow::MainWindow(const QString &conffile, QWidget *parent)
     connection_status = new QLabel(tr("Disconnected"));
     ui->statusbar->addWidget(rotator_status);
     ui->statusbar->addPermanentWidget(connection_status);
-    ui->az_compass->setNeedle(new QwtCompassMagnetNeedle(QwtCompassMagnetNeedle::TriangleStyle,ui->az_compass->palette().mid().color(),ui->az_compass->palette().dark().color()));
-    QwtCompassScaleDraw* scale = new QwtCompassScaleDraw({{0,"N"},{22.5,"NNE"},{45,"NE"},{67.5,"ENE"},{90,"E"},{112.5,"ESE"},{135,"SE"},{157.5,"SSE"},{180,"S"},{202.5,"SSW"},{225,"SW"},{247.5,"WSW"},{270,"W"},{292.5,"WNW"},{315,"NW"},{337.5,"NNW"}});
-
-    ui->az_compass->setScaleDraw(scale);
+    //ui->az_compass->setNeedle(new QwtCompassMagnetNeedle(QwtCompassMagnetNeedle::TriangleStyle,ui->az_compass->palette().mid().color(),ui->az_compass->palette().dark().color()));
     ui->el_dial->setNeedle(new QwtDialSimpleNeedle(QwtDialSimpleNeedle::Ray));
+    ui->az_compass->setNeedle(new QwtDialSimpleNeedle(QwtDialSimpleNeedle::Ray));
     reloadUi();
     connect(polltimer, SIGNAL(timeout()), this, SLOT(poll_rotator()));
 }

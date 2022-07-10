@@ -42,6 +42,7 @@ private:
     int polling_interval;
     bool portopened;
     ROT *theRot;
+    const QStringList param_blacklist = {"flushx"};
 };
 
 class RotException: public QException

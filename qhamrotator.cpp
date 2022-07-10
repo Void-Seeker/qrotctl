@@ -39,7 +39,27 @@ QHamRotator::QHamRotator(rot_model_t r_model)
 QHamRotator::QHamRotator(QString filename)
 {
     portopened = false;
-    LoadSettings(filename);
+    QMap<QString,QString> config;
+    QRegularExpressionValidator validator(QRegularExpression("\\w+:.*"));
+    QFile file(filename);
+    if(!file.open(QIODevice::ReadOnly)) {
+        throw RotException(file.errorString().toStdString().c_str(),RIG_EIO);
+    }
+
+    QTextStream in(&file);
+
+    while (!in.atEnd())
+    {
+       QString s = in.readLine().simplified(); int pos=0;
+       if (validator.validate(s,pos) == QValidator::Acceptable)
+       {
+           QStringList param = s.split(":");
+           config[param[0].simplified()] = param[1].simplified();
+       }
+    }
+
+    file.close();
+    rot_model = (config.contains("rot_model"))?config["rot_model"].toInt():RIG_MODEL_DUMMY;
     theRot = rot_init(rot_model);
     if (!theRot)
         throw RotException ("Rotator initialization error");
@@ -47,6 +67,7 @@ QHamRotator::QHamRotator(QString filename)
     caps = theRot->caps;
     theRot->state.obj = (rig_ptr_t)this;
     list_params();
+    LoadSettings(filename);
 }
 
 QHamRotator::QHamRotator(QHamRotator &r):QHamRotator(r.getModel())
@@ -97,6 +118,7 @@ void QHamRotator::setPollingInterval(const int &i)
 }
 bool QHamRotator::SaveSettings(QString filename)
 {
+
     bool success = true;
     QFile file(filename);
     if(!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
@@ -108,7 +130,8 @@ bool QHamRotator::SaveSettings(QString filename)
     out << "polling_interval" << ": " << polling_interval << endl;
     for(QStringList::const_iterator it=cfg_params.begin();it!=cfg_params.end();it++)
     {
-        out << (*it) << ": " << getConf(*it) << endl;
+        if (!param_blacklist.contains(*it))
+            out << (*it) << ": " << getConf(*it) << endl;
     }
 
     file.close();
@@ -143,7 +166,10 @@ bool QHamRotator::LoadSettings(QString filename)
     polling_interval = (config.contains("polling_interval"))?config["polling_interval"].toInt():1000;
     for(QStringList::const_iterator it=cfg_params.begin();it!=cfg_params.end();it++)
     {
-        if (config.contains(*it)) setConf(*it, config[(*it)]);
+        if (!param_blacklist.contains(*it) && config.contains(*it))
+        {
+            setConf(*it, config[(*it)]);
+        }
     }
     return success;
 }
